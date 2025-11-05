@@ -1,0 +1,30 @@
+.root {
+    -fx-font-family: 'JetBrains Mono';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-image: url("/ui.png");
+    -fx-background-size:stretch;
+}
+
+.label {
+    -fx-text-fill: "black";
+    -fx-pref-width: 125px
+
+}
+
+#title {
+    -fx-font-size: 40px;
+    -fx-text-fill: black;
+}
+
+.tool-button {
+    -fx-background-color: F4F1F0;
+    -fx-text-fill: black;
+    -fx-pref-width: 130px
+
+
+}
+.tool-button:hover {
+  -fx-background-color: #E0D7D5; /* New background color on hover */
+
+}
