@@ -1,3 +1,6 @@
+package Main;
+
+import GUI.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +24,7 @@ public class MainView {
     }
     private void buildUI() {
         root = new BorderPane();
-        root.addEventFilter(PersonEvent.ANY, this::handlePersonEvent);
+//        root.addEventFilter(PersonEvent.ANY, this::handlePersonEvent);
 
         fxMenu = new FXMenu();
         fxToolBar = new FXToolBar();
@@ -40,9 +43,6 @@ public class MainView {
 
 
 
-
-
-
         scene = new Scene(root, 800, 500);
         scene.getStylesheets().add("stylesheet.css");
         stage.setTitle("Tool Menu");
@@ -50,10 +50,5 @@ public class MainView {
         stage.show();
     }
 
-    public void handlePersonEvent(PersonEvent event) {
-        String personEvent = event.getPerson().getFirstName()+ " " + event.getPerson().getLastName();
-        System.out.println(personEvent);
-    }
-
-
 }
+

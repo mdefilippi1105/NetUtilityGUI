@@ -1,4 +1,4 @@
-
+package GUI;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;

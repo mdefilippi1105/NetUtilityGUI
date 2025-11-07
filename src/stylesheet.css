@@ -17,6 +17,12 @@
     -fx-text-fill: black;
 }
 
+.ping-results {
+    -fx-font-size: 20px;
+    -fx-text-fill: green;
+}
+
+
 .tool-button {
     -fx-background-color: F4F1F0;
     -fx-text-fill: black;

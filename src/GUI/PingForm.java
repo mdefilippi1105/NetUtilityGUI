@@ -1,5 +1,6 @@
+package GUI;
 
-
+import NetworkClasses.CheckHosts;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -29,11 +30,15 @@ public class PingForm extends VBox {
         txtipAddress = new TextField();
         txtPort = new TextField();
 
+        String ipData = txtipAddress.getText();
+
+
+
         btnPing = new Button("Ping");
         btnPing.setOnAction(event -> {
             CheckHosts checkHosts = new CheckHosts();
             try {
-                CheckHosts.checkHosts(txtipAddress.getText());
+                CheckHosts.checkHosts(ipData);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

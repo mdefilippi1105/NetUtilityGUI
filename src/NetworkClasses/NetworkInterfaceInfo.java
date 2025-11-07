@@ -1,3 +1,5 @@
+package NetworkClasses;
+
 import javax.swing.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
