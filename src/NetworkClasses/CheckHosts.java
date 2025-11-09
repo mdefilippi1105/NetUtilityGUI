@@ -13,20 +13,23 @@ import java.util.List;
 public class CheckHosts {
 
     public static List<String> checkHosts(String subnet) throws IOException {
+        String mac = GetMacAddress.getMacAddress().toString();
         List<String> results = new ArrayList<>();
 
-        int timeout =2000;
+        int timeout =2500;
         try {
-            for (int i = 1; i < 10; i++) {
+            // get the subnet from text field,
+            // then
+            for (int i = 1; i < 100; i++) {
                 String host = subnet + "." + i;
                 if (InetAddress.getByName(host).isReachable(timeout)) {
                     System.out.println(host + " is reachable");
-                    FXTable.addPingResult(host, "is reachable");
+                    FXTable.addPingResult(host, "is reachable", mac);
                     results.add(host + " is reachable");
                 } else {
                     System.out.println(host + " is not reachable");
-                    FXTable.addPingResult(host, "is not reachable");
-                    results.add(host + " ✗ not reachable");
+                    FXTable.addPingResult(host, "is not reachable", mac);
+                    results.add(host + " ✗ not reachable" + mac);
                 }
             }
         } catch (UnknownHostException e) {

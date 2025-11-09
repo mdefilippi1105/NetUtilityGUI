@@ -30,15 +30,12 @@ public class PingForm extends VBox {
         txtipAddress = new TextField();
         txtPort = new TextField();
 
-        String ipData = txtipAddress.getText();
-
-
-
         btnPing = new Button("Ping");
         btnPing.setOnAction(event -> {
+            String subnet = txtipAddress.getText();
             CheckHosts checkHosts = new CheckHosts();
             try {
-                CheckHosts.checkHosts(ipData);
+                CheckHosts.checkHosts(subnet);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

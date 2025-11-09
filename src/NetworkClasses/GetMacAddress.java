@@ -4,21 +4,64 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetMacAddress {
 
-    public static String getMacAddress() throws SocketException, UnknownHostException {
+    /*
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * how this works :
+    * start with empty string, loop through each byte in the MAC
+    * two hex digits = 1 byte
+    * AA - BB - CC - DD - EE - FF
+    * ↑    ↑    ↑    ↑    ↑    ↑
+    * byte byte byte byte byte byte
+    * 1    2    3    4    5    6
+    * if it's not the last byte, add a " : "
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    */
 
+    public static String getMacAddress() throws SocketException, UnknownHostException {
         NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
+            // create a byte array called mac
             byte [] mac = networkInterface.getHardwareAddress();
-            if (mac == null) {
-                System.out.println("Oh No!");
+
+            if (mac != null) {
+                StringBuilder macAddress = new StringBuilder();
+                for (int i = 0; i < mac.length; i++) {
+                    macAddress.append(String.format("%02X", mac[i]));
+                    if (i < mac.length - 1) {
+                        macAddress.append(":");
+                    }
+                }
+                System.out.println(macAddress);
+                return macAddress.toString();
+
+
+                // OLD
+//                //create new SB object and store in variable sb
+//                StringBuilder sb = new StringBuilder();
+//
+//                // start at index 0, continue while [i] is less than the array length.
+//                for (int i = 0; i < mac.length; i++){
+//                    // format
+//                    sb.append(String.format("%02X%s", mac[i],
+//                                          (i < mac.length -1) ? "-" : ""));
+//                }
+//                System.out.println("mac address : " + mac);
+
             } else {
+                System.out.println("Oh No!");
 
             }
-            System.out.println("mac address : " + mac);
+
 
 
          return "";
+    }
+
+    public static void main(String[] args) throws SocketException, UnknownHostException {
+        getMacAddress();
     }
 }
