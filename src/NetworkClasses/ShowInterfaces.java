@@ -4,25 +4,32 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Enumeration;
+import java.util.List;
 
 public class ShowInterfaces {
     public NetworkInterface NETINT;
-    Enumeration<NetworkInterface> ALL_INTERFACES;
+    Enumeration<NetworkInterface> ipInfo;
     Enumeration<InetAddress> ALL_ADDRESSES;
     public int InterfaceCount = 0;
 
     public  void showInterfaces(){
         try {
             //get all interfaces in the list and store it
-            ALL_INTERFACES = NetworkInterface.getNetworkInterfaces();
-            InterfaceCount = Collections.list(ALL_INTERFACES).size();
-            System.out.println("Number of interfaces: " + InterfaceCount);
-
+            ipInfo = NetworkInterface.getNetworkInterfaces();
+            List<NetworkInterface> ipList = Collections.list(ipInfo);
+            for (NetworkInterface ipInfo : ipList) {
+                System.out.println(ipInfo.getName());
+            }
 
         } catch (SocketException e) {
             System.out.println(e);
             e.printStackTrace();
         }
+    }
+    public static void main(String[] args){
+        ShowInterfaces si = new ShowInterfaces();
+        si.showInterfaces();
     }
 }

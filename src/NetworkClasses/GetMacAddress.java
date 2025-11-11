@@ -36,20 +36,6 @@ public class GetMacAddress {
                     }
                 }
                 System.out.println(macAddress);
-                return macAddress.toString();
-
-
-                // OLD
-//                //create new SB object and store in variable sb
-//                StringBuilder sb = new StringBuilder();
-//
-//                // start at index 0, continue while [i] is less than the array length.
-//                for (int i = 0; i < mac.length; i++){
-//                    // format
-//                    sb.append(String.format("%02X%s", mac[i],
-//                                          (i < mac.length -1) ? "-" : ""));
-//                }
-//                System.out.println("mac address : " + mac);
 
             } else {
                 System.out.println("Oh No!");
