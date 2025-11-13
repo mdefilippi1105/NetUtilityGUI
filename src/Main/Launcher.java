@@ -11,6 +11,7 @@ public class Launcher extends Application {
         new MainView(primaryStage);
     }
     public static void main(String[] args) {
+
         launch(args);
     }
 }

@@ -36,13 +36,12 @@ public class GetMacAddress {
                     }
                 }
                 System.out.println(macAddress);
+                return macAddress.toString();
 
             } else {
                 System.out.println("Oh No!");
 
             }
-
-
 
          return "";
     }
