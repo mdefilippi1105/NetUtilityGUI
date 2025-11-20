@@ -16,6 +16,7 @@ public class FXToolBar extends HBox {
     private Button btnExit;
     private ContentDisplay CONTENT_DISPLAY = ContentDisplay.GRAPHIC_ONLY;
 
+
     public FXToolBar() {
         buildUI();
     }

@@ -1,5 +1,5 @@
 .root {
-    -fx-font-family: 'JetBrains Mono';
+    -fx-font-family: 'ARIAL';
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-background-image: url("/ui.png");
@@ -18,13 +18,14 @@
 
 
  /////////////// PING RESULTS //////////////////
+
 .ping-results {
     -fx-background-color: #f5f5f5;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
 }
 .ping-results .column-header {
-    -fx-background-color: #2c3e50;
+    -fx-background-color: #ffffff;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -48,15 +49,35 @@
     -fx-text-fill: white;
 }
 
+///////////// TOOL BUTTON ////////////////////////
 
 .tool-button {
     -fx-background-color: F4F1F0;
     -fx-text-fill: black;
     -fx-pref-width: 130px
 
-
 }
 .tool-button:hover {
   -fx-background-color: #E0D7D5; /* New background color on hover */
 
+}
+
+////////////////////// ALERT WINDOW ////////////////////////
+.my-alert {
+    -fx-font-family: "Arial";        /* Change font family */
+    -fx-font-size: 16px;             /* Change size */
+}
+
+.my-alert .header-panel {
+    -fx-font-size: 16px;             /* Header text */
+    -fx-font-weight: bold;
+}
+
+.my-alert .content {
+    -fx-font-size: 16px;             /* Body text */
+}
+
+.my-alert .button-bar .button {
+    -fx-font-size: 14px;             /* Buttons */
+    -fx-font-weight: bold;
 }

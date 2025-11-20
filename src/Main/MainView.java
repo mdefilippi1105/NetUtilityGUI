@@ -43,7 +43,7 @@ public class MainView {
 
 
 
-        scene = new Scene(root, 800, 500);
+        scene = new Scene(root, 1200, 500);
         scene.getStylesheets().add("stylesheet.css");
         stage.setTitle("Tool Menu");
         stage.setScene(scene);
