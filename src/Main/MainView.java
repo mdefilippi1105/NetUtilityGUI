@@ -7,6 +7,24 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+/*
+to do:
+trim decibels off of the slider - done
+grab value from the slider - done
+do something with the port field
+set ping second interval
+at the end of ping: display how many reachable, and how many not
+display mac address somewhere
+button that clears the table
+file menu -> action
+edit menu -> action
+help menu -> action
+new button -> action
+save button -> action
+quit button -> action
+ */
+
+
 public class MainView {
     private Stage stage;
     private BorderPane root;

@@ -10,6 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class PingForm extends VBox {
 
@@ -17,13 +18,16 @@ public class PingForm extends VBox {
     public Button btnPing;
     private Label lblIpAddress;
     private Label lblPort;
-    private TextField txtipAddress;
+    private Label lblSlider;
+    public static TextField txtipAddress;
     private TextField txtPort;
     private ButtonBar btnBar;
-    private ProgressIndicator spinner;
+    public static ProgressIndicator spinner;
     Progress progress = new Progress();
     private PingSlider pingSlider;
-    private Label lblSlider;
+//    private DecimalFormat df = new DecimalFormat("0");
+    public static int ipValue;
+
 
 
     public boolean checkThreeOctets (String text) {
@@ -33,8 +37,6 @@ public class PingForm extends VBox {
         String[] parts = text.trim().split("\\.");
         return parts.length == 3;
     }
-
-
 
     public PingForm() {
         grid = new GridPane();
@@ -63,6 +65,10 @@ public class PingForm extends VBox {
         grid.add(slider, 0, 3, 2, 1);
         grid.add(lblSlider, 0, 4, 2, 1);
 
+        grid.add(spinner, 0, 2, 2, 1);
+        GridPane.setHalignment(spinner, HPos.CENTER);
+        spinner.setVisible(false);
+
 
         grid.setHgap(20);
         grid.setVgap(5);
@@ -76,9 +82,11 @@ public class PingForm extends VBox {
         // and set the hosts based on the value selected
         // then ping that amount
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            lblSlider.setText("Value:" + newValue);
+            //convert value to decimal as int and saved as ipValue
+            //ipValue will be important as it will be used as the amount of pings.
+            ipValue = (int)slider.getValue();
+            lblSlider.setText("Hosts:" + ipValue);
         });
-
 
         // this is the action for the ping button
         // most of the juice is here
@@ -89,21 +97,31 @@ public class PingForm extends VBox {
                 System.out.println("Error: Subnet should be 3 octets");
                 AlertWindow alert = new AlertWindow();
                 alert.alertWindowPing();
-                System.out.println(checkThreeOctets(subnet));
-            } else {
-                try {
-                    grid.add(spinner, 0, 2, 2, 1);
-                    GridPane.setHalignment(spinner, HPos.CENTER);
-                    Thread t = CheckHosts.checkHostInThread(subnet, null);
-                    t.start();
-                    progress.progressIndicatorOn();
-                    GetMacAddress.getMacAddress();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    progress.progressIndicatorOff();
+            } else if (checkThreeOctets(subnet)) {
+                AlertWindow  alert = new AlertWindow();
+                alert.alertWindowConfirm();
+                spinner.setVisible(true);
+                Thread t = CheckHosts.checkHostInThread(subnet, null);
+                t.start();
+                // if the thread is terminated - shut off spinner
+                // keep adding end events.
+                if (t.getState() == Thread.State.TERMINATED) {
+                    PingForm.spinner.setVisible(false);
                 }
+            } else {
+                AlertWindow  alert = new AlertWindow();
+                alert.alertNoHostSet();
             }
         });
     }
+
+    //get the value from slider
+    public static int getValue() {
+        return ipValue;
+    }
+    //get the value from text box
+    public static String getTextField() {
+        return txtipAddress.getText();
+    }
+
 }

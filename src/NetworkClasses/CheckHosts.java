@@ -1,7 +1,7 @@
 package NetworkClasses;
 
 import GUI.FXTable;
-import Main.MainView.*;
+import GUI.PingForm;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -16,12 +16,13 @@ public class CheckHosts {
     public static List<String> checkHosts(String subnet) throws IOException  {
         String mac = GetMacAddress.getMacAddress().toString();
         List<String> results = new ArrayList<>();
+        int pingCount = PingForm.getValue();
 
         int timeout =3500;
         try {
             // get the subnet from text field,
             // then
-            for (int i = 1; i < 100; i++) {
+            for (int i = 1; i < pingCount; i++) {
                 String host = subnet + "." + i;
                 if (InetAddress.getByName(host).isReachable(timeout)) {
                     System.out.println(host + " is reachable");
@@ -45,6 +46,9 @@ public class CheckHosts {
                 checkHosts(subnet);
                 if (onComplete != null) {
                     Platform.runLater(onComplete);
+                }
+                if (onComplete == null) {
+                    PingForm.spinner.setVisible(false);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

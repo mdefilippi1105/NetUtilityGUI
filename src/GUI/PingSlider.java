@@ -23,9 +23,6 @@ public class PingSlider {
 
         value = slider.getValue();
         Label valueLabel = new Label("How many hosts?" + value);
-
-
-
         System.out.println(value);
     }
 
@@ -33,5 +30,7 @@ public class PingSlider {
         showSlider();
         return slider;
     }
+
+
 
 }
