@@ -25,7 +25,7 @@ public class GetMacAddress {
     public static String getMacAddress() throws SocketException, UnknownHostException {
         NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             // create a byte array called mac
-            byte [] mac = networkInterface.getHardwareAddress();
+            byte[] mac = networkInterface.getHardwareAddress();
 
             if (mac != null) {
                 StringBuilder macAddress = new StringBuilder();

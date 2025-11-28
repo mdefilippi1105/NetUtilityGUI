@@ -14,7 +14,7 @@ import java.util.List;
 public class CheckHosts {
 
     public static List<String> checkHosts(String subnet) throws IOException  {
-        String mac = GetMacAddress.getMacAddress().toString();
+        String mac = GetMacAddress.getMacAddress();
         List<String> results = new ArrayList<>();
         int pingCount = PingForm.getValue();
 
@@ -26,11 +26,11 @@ public class CheckHosts {
                 String host = subnet + "." + i;
                 if (InetAddress.getByName(host).isReachable(timeout)) {
                     System.out.println(host + " is reachable");
-                    FXTable.addPingResult(host, "is reachable", mac);
+                    FXTable.addPingResult(host, "is reachable");
                     results.add(host + " is reachable");
                 } else {
                     System.out.println(host + " is not reachable");
-                    FXTable.addPingResult(host, "is not reachable", mac);
+                    FXTable.addPingResult(host, "is not reachable");
                     results.add(host + " ✗ not reachable" + mac);
                 }
             }

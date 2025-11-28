@@ -14,7 +14,7 @@ grab value from the slider - done
 do something with the port field
 set ping second interval
 at the end of ping: display how many reachable, and how many not
-display mac address somewhere
+display mac address somewhere - done
 button that clears the table
 file menu -> action
 edit menu -> action

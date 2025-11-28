@@ -1,6 +1,8 @@
+///////////// UI FONTS AND THINGS //////////////////
+
 .root {
     -fx-font-family: 'ARIAL';
-    -fx-font-size: 20px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-background-image: url("/ui.png");
     -fx-background-size:stretch;
@@ -9,6 +11,31 @@
 .label {
     -fx-text-fill: "black";
     -fx-pref-width: 125px
+}
+
+#lblIpAddress {
+    -fx-font-family: Arial;
+    -fx-font-size: 12;
+}
+
+#lblPort {
+    -fx-font-family: Arial;
+    -fx-font-size: 10pt;
+}
+
+#ping-button {
+    -fx-font-family: Arial;
+    -fx-font-size: 11pt;
+}
+
+#lookup-button {
+    -fx-font-family: Arial;
+    -fx-font-size: 11pt;
+}
+
+#spinner {
+    -fx-font-family: Arial;
+    -fx-font-size: 12pt;
 }
 
 #title {

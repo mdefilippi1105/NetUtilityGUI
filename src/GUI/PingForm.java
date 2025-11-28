@@ -2,6 +2,7 @@ package GUI;
 
 import NetworkClasses.CheckHosts;
 import NetworkClasses.GetMacAddress;
+import NetworkClasses.IPLookup;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -10,17 +11,21 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.text.DecimalFormat;
+
+import static NetworkClasses.IPLookup.ipLookup;
 
 public class PingForm extends VBox {
 
     private GridPane grid;
     public Button btnPing;
+    public Button btnLookup;
     private Label lblIpAddress;
     private Label lblPort;
     private Label lblSlider;
     public static TextField txtipAddress;
-    private TextField txtPort;
+    public static TextField txtPort;
     private ButtonBar btnBar;
     public static ProgressIndicator spinner;
     Progress progress = new Progress();
@@ -40,35 +45,45 @@ public class PingForm extends VBox {
 
     public PingForm() {
         grid = new GridPane();
+                      // spacing between rows
 
         lblIpAddress = new Label("IP Address");
-        lblPort = new Label("Port");
-
+        lblPort = new Label("URL Search");
         txtipAddress = new TextField();
         txtPort = new TextField();
-
         spinner = new ProgressIndicator();
-
         btnPing = new Button("Ping");
-        btnBar = new ButtonBar();
-        btnBar.getButtons().addAll(btnPing);
-
+        btnLookup = new Button("Lookup");
         pingSlider = new PingSlider();
-        Slider slider = pingSlider.getSlider();
-        lblSlider = new Label("How many hosts? 0");
 
+        Slider slider = pingSlider.getSlider();
+        lblSlider = new Label("How many hosts?");
+        // ping field
         grid.add(lblIpAddress, 0, 0, 1, 1);
-        grid.add(txtipAddress, 1, 0, 1, 1);
-        grid.add(lblPort, 0, 1, 1, 1);
-        grid.add(txtPort, 1, 1, 1, 1);
-        grid.add(btnBar, 1, 2, 2, 1);
-        grid.add(slider, 0, 3, 2, 1);
-        grid.add(lblSlider, 0, 4, 2, 1);
+        grid.add(txtipAddress, 0, 1, 1, 1);
+        lblIpAddress.setId("lblIpAddress");//css tag
+        grid.add(btnPing, 0,4, 1, 1);
+        GridPane.setMargin(btnPing, new Insets(12, 0, 0, 0)); // 10px below txt1
+        btnPing.setId("ping-button");
+
+        // slider
+        grid.add(slider, 0, 2, 2, 1);
+        grid.add(lblSlider, 0, 3, 2, 1);
+
+        // URL search
+        grid.add(lblPort, 0, 5, 1, 1);
+        //this creates padding, kind of like pad x/pad y
+        GridPane.setMargin(lblPort, new Insets(42, 0, 0, 0)); // 10px below txt1
+        grid.add(txtPort, 0, 7, 1, 1);
+        lblPort.setId("lblPort");
+        grid.add(btnLookup, 0,11, 1, 1);
+        btnLookup.setId("lookup-button");
+
 
         grid.add(spinner, 0, 2, 2, 1);
+        spinner.setId("spinner");
         GridPane.setHalignment(spinner, HPos.CENTER);
         spinner.setVisible(false);
-
 
         grid.setHgap(20);
         grid.setVgap(5);
@@ -97,6 +112,7 @@ public class PingForm extends VBox {
                 System.out.println("Error: Subnet should be 3 octets");
                 AlertWindow alert = new AlertWindow();
                 alert.alertWindowPing();
+
             } else if (checkThreeOctets(subnet)) {
                 AlertWindow  alert = new AlertWindow();
                 alert.alertWindowConfirm();
@@ -104,7 +120,7 @@ public class PingForm extends VBox {
                 Thread t = CheckHosts.checkHostInThread(subnet, null);
                 t.start();
                 // if the thread is terminated - shut off spinner
-                // keep adding end events.
+                // TODO: keep adding end events.
                 if (t.getState() == Thread.State.TERMINATED) {
                     PingForm.spinner.setVisible(false);
                 }
@@ -113,7 +129,16 @@ public class PingForm extends VBox {
                 alert.alertNoHostSet();
             }
         });
+        btnLookup.setOnAction(event -> {
+            try {
+                ipLookup();
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
+
 
     //get the value from slider
     public static int getValue() {
@@ -122,6 +147,10 @@ public class PingForm extends VBox {
     //get the value from text box
     public static String getTextField() {
         return txtipAddress.getText();
+    }
+    //get the value from port box
+    public static String getNameField() {
+        return txtPort.getText();
     }
 
 }

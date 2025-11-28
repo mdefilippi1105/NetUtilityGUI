@@ -24,7 +24,6 @@ public class FXTable extends VBox {
         ipColumn.setCellValueFactory(c -> c.getValue().ip);
         pingResultColumn.setCellValueFactory(c -> c.getValue().result);
 
-
         table.getColumns().add(ipColumn);
         table.getColumns().add(pingResultColumn);
 
@@ -35,8 +34,8 @@ public class FXTable extends VBox {
         VBox.setVgrow(table, Priority.ALWAYS);
     }
 
-    public static void addPingResult(String ip, String result, String mac) {
-        table.getItems().add(new PingRow(ip, result, mac));
+    public static void addPingResult(String ip, String result) {
+        table.getItems().add(new PingRow(ip, result));
     }
 
 }
