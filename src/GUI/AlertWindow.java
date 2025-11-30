@@ -26,7 +26,6 @@ public class AlertWindow {
             Alert windowAlert =  new Alert(Alert.AlertType.CONFIRMATION);
             windowAlert.setTitle("Continue?");
             windowAlert.setHeaderText("Confirm ping?");
-
             windowAlert.setContentText("Would you like to continue a ping for " +
                                        PingForm.getTextField() + ".xx " + "on interface: " + mac + "?");
             windowAlert.getDialogPane().getStyleClass().add("my-alert");
@@ -47,6 +46,15 @@ public class AlertWindow {
         alertHost.getDialogPane().getStyleClass().add("my-alert");
         alertHost.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
         alertHost.showAndWait();
+    }
+    public void alertHostFieldEmpty() {
+        Alert alertNoHost =  new Alert(Alert.AlertType.WARNING);
+        alertNoHost.setTitle("Empty Host Field");
+        alertNoHost.setHeaderText("Field Empty");
+        alertNoHost.setContentText("Please enter a domain name such as 'iptechtools.com' or 'google.com'.");
+        alertNoHost.getDialogPane().getStyleClass().add("my-alert");
+        alertNoHost.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+        alertNoHost.showAndWait();
     }
 
 

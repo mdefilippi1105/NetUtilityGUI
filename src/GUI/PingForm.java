@@ -32,6 +32,7 @@ public class PingForm extends VBox {
     private PingSlider pingSlider;
 //    private DecimalFormat df = new DecimalFormat("0");
     public static int ipValue;
+    AlertWindow alertWindow =  new AlertWindow();
 
 
 
@@ -73,16 +74,17 @@ public class PingForm extends VBox {
         // URL search
         grid.add(lblPort, 0, 5, 1, 1);
         //this creates padding, kind of like pad x/pad y
-        GridPane.setMargin(lblPort, new Insets(42, 0, 0, 0)); // 10px below txt1
-        grid.add(txtPort, 0, 7, 1, 1);
+        GridPane.setMargin(lblPort, new Insets(42, 0, 0, 0));
         lblPort.setId("lblPort");
-        grid.add(btnLookup, 0,11, 1, 1);
+        grid.add(txtPort, 0, 6, 2, 1);
+        grid.add(btnLookup, 0,9, 1, 1);
         btnLookup.setId("lookup-button");
 
 
-        grid.add(spinner, 0, 2, 2, 1);
+        grid.add(spinner, 0, 12, 2, 1);
         spinner.setId("spinner");
-        GridPane.setHalignment(spinner, HPos.CENTER);
+        GridPane.setMargin(spinner, new Insets(12, 0, 0, 0));
+        GridPane.setHalignment(spinner, HPos.LEFT);
         spinner.setVisible(false);
 
         grid.setHgap(20);
@@ -91,6 +93,8 @@ public class PingForm extends VBox {
         getChildren().add(grid);
         setPadding(new Insets(10));
         VBox.setVgrow(grid, Priority.ALWAYS);
+
+//------------------------------------------------------------------------------------------
 
         // this is the slider logic
         // the plan is to grab the value from the slider
@@ -102,6 +106,7 @@ public class PingForm extends VBox {
             ipValue = (int)slider.getValue();
             lblSlider.setText("Hosts:" + ipValue);
         });
+//----------------------------------------------------------------------------------------------------------------------
 
         // this is the action for the ping button
         // most of the juice is here
@@ -110,12 +115,10 @@ public class PingForm extends VBox {
 
             if (!checkThreeOctets(subnet)) {
                 System.out.println("Error: Subnet should be 3 octets");
-                AlertWindow alert = new AlertWindow();
-                alert.alertWindowPing();
+                alertWindow.alertWindowPing();
 
             } else if (checkThreeOctets(subnet)) {
-                AlertWindow  alert = new AlertWindow();
-                alert.alertWindowConfirm();
+                alertWindow.alertWindowConfirm();
                 spinner.setVisible(true);
                 Thread t = CheckHosts.checkHostInThread(subnet, null);
                 t.start();
@@ -125,20 +128,28 @@ public class PingForm extends VBox {
                     PingForm.spinner.setVisible(false);
                 }
             } else {
-                AlertWindow  alert = new AlertWindow();
-                alert.alertNoHostSet();
+                alertWindow.alertNoHostSet();
             }
         });
+
+//----------------------------------------------------------------------------------------------------------------------
+        // this is the action for the LOOKUP button
         btnLookup.setOnAction(event -> {
-            try {
-                ipLookup();
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
+            if (getNameField() == null) {
+                alertWindow.alertHostFieldEmpty();
+            } else {
+                try {
+                    ipLookup();
+                } catch (UnknownHostException e) {
+                  throw new RuntimeException(e);
+                } finally {
+                    txtPort.setText("");
+                    setFieldNull();
+
+                }
             }
         });
     }
-
-
 
     //get the value from slider
     public static int getValue() {
@@ -152,5 +163,11 @@ public class PingForm extends VBox {
     public static String getNameField() {
         return txtPort.getText();
     }
+    public static String setFieldNull() {
+        txtPort.setText("");
+        txtPort.clear();
+        return "";
+    }
+
 
 }
