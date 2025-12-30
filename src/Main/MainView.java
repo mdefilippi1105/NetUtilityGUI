@@ -8,14 +8,22 @@ import javafx.stage.Stage;
 
 
 /*
-to do:
+TODO:
 trim decibels off of the slider - done
 grab value from the slider - done
-do something with the port field
-set ping second interval
-at the end of ping: display how many reachable, and how many not
+do something with the port field - done
 display mac address somewhere - done
-button that clears the table
+button that stops the ping - done
+change Ready to "running" while ping running - removed
+at the end of ping: display how many reachable, and how many not - done
+button that clears the table - done
+spinner shrunk-done
+
+
+thrown an error when no route to host -> now it just crashes to console
+organize results at end
+set ping second interval
+when prompted to ping, clicking cancel pings anyway -> change this
 file menu -> action
 edit menu -> action
 help menu -> action
@@ -30,42 +38,28 @@ public class MainView {
     private BorderPane root;
     private Scene scene;
 
-    private FXMenu fxMenu;
-    private FXToolBar fxToolBar;
-    private PingForm fxForm;
-    private FXTable fxTable;
-    private FXStatusBar fxStatusBar;
+    private final FXMenu fxMenu = new FXMenu();
+    private final FXToolBar fxToolBar = new FXToolBar();
+    public PingForm fxForm = new PingForm();
+    public FXTable fxTable = new FXTable();
+    public FXStatusBar fxStatusBar = new FXStatusBar();
 
-    public MainView(Stage stage) {
-        this.stage = stage;
-        buildUI();
-    }
+
     private void buildUI() {
         root = new BorderPane();
-//        root.addEventFilter(PersonEvent.ANY, this::handlePersonEvent);
-
-        fxMenu = new FXMenu();
-        fxToolBar = new FXToolBar();
-
         VBox top = new VBox(fxMenu, fxToolBar);
         root.setTop(top);
-
-        fxForm = new PingForm();
         root.setLeft(fxForm);
-
-        fxTable = new FXTable();
         root.setCenter(fxTable);
-
-        fxStatusBar = new FXStatusBar();
-        root.setBottom(fxStatusBar);
-
-
-
-        scene = new Scene(root, 1200, 500);
+        scene = new Scene(root, 700, 500);
         scene.getStylesheets().add("stylesheet.css");
         stage.setTitle("Tool Menu");
         stage.setScene(scene);
         stage.show();
+    }
+    public MainView(Stage stage) {
+        this.stage = stage;
+        buildUI();
     }
 
 }

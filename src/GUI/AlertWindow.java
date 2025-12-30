@@ -1,5 +1,6 @@
 package GUI;
 
+import NetworkClasses.CheckHosts;
 import NetworkClasses.GetMacAddress;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -9,54 +10,72 @@ import java.net.UnknownHostException;
 import java.util.Optional;
 
 public class AlertWindow {
+   private Alert warning = new Alert(Alert.AlertType.WARNING);
+   private Alert error = new Alert(Alert.AlertType.ERROR);
+   private Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+   private Alert info = new Alert(Alert.AlertType.INFORMATION);
 
 
     public void alertWindowPing() {
-        Alert alert =  new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Subnet Error");
-        alert.setHeaderText("ALERT");
-        alert.setContentText("Alert! Please do this thing.");
-        alert.getDialogPane().getStyleClass().add("my-alert");
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-        Optional<ButtonType> result = alert.showAndWait();
+        warning.setTitle("Subnet Error");
+        warning.setHeaderText("ALERT");
+        warning.setContentText("Alert! Please do this thing.");
+        warning.getDialogPane().getStyleClass().add("my-alert");
+        warning.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+        Optional<ButtonType> result = warning.showAndWait();
         }
+
     public void alertWindowConfirm() {
         try {
             String mac = GetMacAddress.getMacAddress();
-            Alert windowAlert =  new Alert(Alert.AlertType.CONFIRMATION);
-            windowAlert.setTitle("Continue?");
-            windowAlert.setHeaderText("Confirm ping?");
-            windowAlert.setContentText("Would you like to continue a ping for " +
+            confirmation.setTitle("Continue?");
+            confirmation.setHeaderText("Confirm ping?");
+            confirmation.setContentText("Would you like to continue a ping for " +
                                        PingForm.getTextField() + ".xx " + "on interface: " + mac + "?");
-            windowAlert.getDialogPane().getStyleClass().add("my-alert");
-            windowAlert.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-            windowAlert.showAndWait();
+            confirmation.getDialogPane().getStyleClass().add("my-alert");
+            confirmation.getDialogPane().setPrefWidth(450);
+            confirmation.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+            Optional<ButtonType> result = confirmation.showAndWait();
+//            if (result.get() == ButtonType.CANCEL) {
+//                confirmation.close();
+//                CheckHosts.cancelPingCount();
+//                PingForm.clearSlider();
+//            }
         } catch (SocketException e) {
             throw new RuntimeException(e);
         } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
     public void alertNoHostSet() {
-        Alert alertHost =  new Alert(Alert.AlertType.WARNING);
-        alertHost.setTitle("No Host Set");
-        alertHost.setHeaderText("No Host Set");
-        alertHost.setContentText("Please make sure that a host value is selected.");
-        alertHost.getDialogPane().getStyleClass().add("my-alert");
-        alertHost.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-        alertHost.showAndWait();
+
+        warning.setTitle("No Host Set");
+        warning.setHeaderText("No Host Set");
+        warning.setContentText("Please make sure that a host value is selected.");
+        warning.getDialogPane().getStyleClass().add("my-alert");
+        warning.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+        warning.showAndWait();
     }
     public void alertHostFieldEmpty() {
-        Alert alertNoHost =  new Alert(Alert.AlertType.WARNING);
-        alertNoHost.setTitle("Empty Host Field");
-        alertNoHost.setHeaderText("Field Empty");
-        alertNoHost.setContentText("Please enter a domain name such as 'iptechtools.com' or 'google.com'.");
-        alertNoHost.getDialogPane().getStyleClass().add("my-alert");
-        alertNoHost.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-        alertNoHost.showAndWait();
+        warning.setTitle("Empty Host Field");
+        warning.setHeaderText("Field Empty");
+        warning.setContentText("Please enter a domain name such as 'iptechtools.com' or 'google.com'.");
+        warning.getDialogPane().getStyleClass().add("my-alert");
+        warning.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+        warning.showAndWait();
     }
 
-
+    public void showPingResults(){
+        String pingResults = CheckHosts.sortResults();
+        info.getDialogPane().getStyleClass().add("my-alert");
+        info.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+        info.setTitle("Ping Results");
+        if (pingResults.equals("") || pingResults.isEmpty()) {
+            info.setContentText("No host set. Please set host value on the slider.");
+        }
+        info.setContentText(pingResults);
+        info.show();
+    }
 
 }

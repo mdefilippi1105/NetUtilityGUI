@@ -33,9 +33,35 @@
     -fx-font-size: 11pt;
 }
 
+#cancel-button {
+    -fx-font-family: Arial;
+    -fx-font-size: 11pt;
+    -fx-color: red;
+}
+#clear-button {
+    -fx-font-family: Arial;
+    -fx-font-size: 11pt;
+    -fx-color: red;
+}
+
+/*
 #spinner {
     -fx-font-family: Arial;
     -fx-font-size: 12pt;
+}
+*/
+/* make the circular indicator bigger/smaller */
+spinner {
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-pref-width: 60px;
+    -fx-pref-height: 60px;
+}
+
+/* remove inner glow/rounded background and make it flat */
+#spinner {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
 }
 
 #title {
@@ -50,20 +76,26 @@
     -fx-background-color: #f5f5f5;
     -fx-border-color: #cccccc;
     -fx-border-width: 1px;
+
+
 }
+
 .ping-results .column-header {
     -fx-background-color: #ffffff;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
+    -fx-font-size: 11px;
     -fx-padding: 10px;
 }
 .ping-results .table-cell {
     -fx-padding: 8px;
     -fx-border-color: #e0e0e0;
+
 }
 .ping-results .table-row-cell {
     -fx-background-color: white;
+    -fx-width: 100;
+
 }
 .ping-results .table-row-cell:odd {
     -fx-background-color: #f9f9f9;

@@ -13,7 +13,12 @@ public class IPLookup {
     public static void ipLookup() throws UnknownHostException {
         InetAddress ip = InetAddress.getByName(nameValue);
         System.out.println(ip.getHostAddress());
+        if (ip == null || !ip.isLoopbackAddress()) {}
     }
+    public static void resetIPLookup() {
+        nameValue = null;
+    }
+
     public static void main (String[] args) {
         System.out.println(nameValue);
 

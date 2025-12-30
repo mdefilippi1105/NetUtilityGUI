@@ -3,12 +3,10 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
-
-
 public class PingSlider {
 
     private Slider slider;
-    private double value;
+    double value;
 
     public void showSlider() {
         slider = new Slider();
@@ -17,9 +15,9 @@ public class PingSlider {
         slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
         slider.setMajorTickUnit(50);
-        slider.setBlockIncrement(100);
+        slider.setBlockIncrement(115);
         slider.setOrientation(Orientation.HORIZONTAL);
-        slider.setSnapToTicks(true);
+        slider.setSnapToTicks(false);
 
         value = slider.getValue();
         Label valueLabel = new Label("How many hosts?" + value);
@@ -30,6 +28,17 @@ public class PingSlider {
         showSlider();
         return slider;
     }
+
+    public double getValue() {
+        value = slider.getValue();
+        return value;
+    }
+
+    public void setSliderValue(double value) {
+        value = 0.0;
+        slider.setValue(value);
+    }
+
 
 
 
