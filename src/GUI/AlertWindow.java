@@ -2,12 +2,14 @@ package GUI;
 
 import NetworkClasses.CheckHosts;
 import NetworkClasses.GetMacAddress;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Optional;
+import org.controlsfx.control.Notifications;
+import javafx.util.Duration;
 
 public class AlertWindow {
    private Alert warning = new Alert(Alert.AlertType.WARNING);
@@ -68,14 +70,23 @@ public class AlertWindow {
 
     public void showPingResults(){
         String pingResults = CheckHosts.sortResults();
+        int goodPings = CheckHosts.howManyHosts();
         info.getDialogPane().getStyleClass().add("my-alert");
         info.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
         info.setTitle("Ping Results");
-        if (pingResults.equals("") || pingResults.isEmpty()) {
+        if (pingResults.isEmpty()) {
             info.setContentText("No host set. Please set host value on the slider.");
         }
         info.setContentText(pingResults);
         info.show();
+
+        //controls fx popup
+        Notifications.create()
+                .title("Scan Complete")
+                .text("Currently found: " + goodPings)
+                .hideAfter(Duration.seconds(5))
+                .position(Pos.TOP_RIGHT)
+                .showInformation();
     }
 
 }

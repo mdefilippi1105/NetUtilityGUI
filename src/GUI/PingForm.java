@@ -165,6 +165,7 @@ public class PingForm extends VBox {
 //         this is the action for the CLEAR button
         btnClear.setOnAction( e -> {
             FXTable.removeResult();
+            CheckHosts.clearResults();
         });
 
 

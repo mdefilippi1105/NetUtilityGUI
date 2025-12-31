@@ -16,10 +16,12 @@ import java.util.List;
 public class CheckHosts {
 
     private static volatile boolean stopRequested = false;
-    // good pings
+    // all pings
     private static final List<String> results = new ArrayList<>();
     // bad pings
     private static final List<String> noReplyHosts = new ArrayList<>();
+    // good pings
+    private static final List<String> yesReplyHosts = new ArrayList<>();
 
 
     public static List<String> checkHosts(String subnet, int pingCount) throws IOException {
@@ -36,12 +38,13 @@ public class CheckHosts {
                 String host = subnet + "." + i;
 
                 if (InetAddress.getByName(host).isReachable(timeout)) {
-                    System.out.println(host + "is reachable. Current size: " + results.size()); // debug - delete later
+                    System.out.println(host + " is reachable. Current size: " + results.size()); // debug - delete later
                     FXTable.addPingResult(host, "is reachable");
+                    yesReplyHosts.add(host);
                     results.add(host + " is reachable");
 
                 } else {
-                    System.out.println(host + "is not reachable. Current size: " + results.size()); // debug - delete later
+                    System.out.println(host + " is not reachable. Current size: " + results.size()); // debug - delete later
                     FXTable.addPingResult(host, "is not reachable");
                     noReplyHosts.add(host);
                     results.add(host + " ✗ not reachable");
@@ -97,6 +100,19 @@ public class CheckHosts {
         Collections.sort(results);
         return results.toString();
     }
+
+    public static void  clearResults() {
+        results.clear();
+        noReplyHosts.clear();
+        yesReplyHosts.clear();
+        System.out.println("Current size: " + results.size() + " " + noReplyHosts.size());
+    }
+
+    public static int howManyHosts() {
+        return yesReplyHosts.size();
+    }
+
+
 
 
 

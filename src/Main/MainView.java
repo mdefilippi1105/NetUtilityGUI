@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+
 /*
 TODO:
 trim decibels off of the slider - done
@@ -56,6 +57,7 @@ public class MainView {
         stage.setTitle("Tool Menu");
         stage.setScene(scene);
         stage.show();
+
     }
     public MainView(Stage stage) {
         this.stage = stage;
